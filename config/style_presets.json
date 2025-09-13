@@ -1,0 +1,135 @@
+{
+  "presets": {
+    "neo_noir": {
+      "name": "Neo Noir",
+      "description": "Dark, moody urban crime aesthetic",
+      "prompt_modifiers": [
+        "film noir style",
+        "high contrast lighting",
+        "deep shadows",
+        "neon lights",
+        "rain-slicked streets",
+        "venetian blind shadows",
+        "cinematic composition"
+      ],
+      "negative_prompt": [
+        "bright colors",
+        "cheerful",
+        "cartoon",
+        "anime",
+        "low quality"
+      ],
+      "model_settings": {
+        "guidance_scale": 8.5,
+        "num_inference_steps": 30,
+        "scheduler": "DPMSolverMultistep"
+      }
+    },
+    "sci_fi": {
+      "name": "Science Fiction",
+      "description": "Futuristic technological aesthetic",
+      "prompt_modifiers": [
+        "science fiction",
+        "futuristic",
+        "cyberpunk",
+        "holographic displays",
+        "neon lighting",
+        "sleek design",
+        "high tech"
+      ],
+      "negative_prompt": [
+        "medieval",
+        "rustic",
+        "vintage",
+        "low quality",
+        "blurry"
+      ],
+      "model_settings": {
+        "guidance_scale": 7.5,
+        "num_inference_steps": 25,
+        "scheduler": "EulerAncestralDiscrete"
+      }
+    },
+    "documentary": {
+      "name": "Documentary",
+      "description": "Realistic, naturalistic style",
+      "prompt_modifiers": [
+        "documentary style",
+        "realistic",
+        "natural lighting",
+        "handheld camera",
+        "authentic",
+        "unposed",
+        "candid"
+      ],
+      "negative_prompt": [
+        "staged",
+        "artificial",
+        "fantasy",
+        "cartoon",
+        "anime"
+      ],
+      "model_settings": {
+        "guidance_scale": 6.0,
+        "num_inference_steps": 20,
+        "scheduler": "DDIM"
+      }
+    },
+    "cinematic": {
+      "name": "Cinematic",
+      "description": "Hollywood blockbuster aesthetic",
+      "prompt_modifiers": [
+        "cinematic",
+        "epic composition",
+        "dramatic lighting",
+        "anamorphic lens",
+        "depth of field",
+        "color graded",
+        "35mm film"
+      ],
+      "negative_prompt": [
+        "amateur",
+        "phone camera",
+        "low quality",
+        "flat lighting"
+      ],
+      "model_settings": {
+        "guidance_scale": 8.0,
+        "num_inference_steps": 30,
+        "scheduler": "DPMSolverMultistep"
+      }
+    },
+    "animated": {
+      "name": "Animated",
+      "description": "Stylized animation aesthetic",
+      "prompt_modifiers": [
+        "3D animated style",
+        "Pixar quality",
+        "vibrant colors",
+        "smooth rendering",
+        "expressive characters",
+        "detailed textures"
+      ],
+      "negative_prompt": [
+        "realistic",
+        "photographic",
+        "live action",
+        "low poly"
+      ],
+      "model_settings": {
+        "guidance_scale": 7.0,
+        "num_inference_steps": 25,
+        "scheduler": "EulerAncestralDiscrete"
+      }
+    }
+  },
+  "default_settings": {
+    "width": 1920,
+    "height": 1080,
+    "guidance_scale": 7.5,
+    "num_inference_steps": 25,
+    "scheduler": "DPMSolverMultistep",
+    "seed": -1,
+    "batch_size": 1
+  }
+}

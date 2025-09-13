@@ -1,0 +1,154 @@
+# DNA Templates for different scene types
+
+interior:
+  environment:
+    lighting_options:
+      - "soft natural light from windows"
+      - "warm interior lighting"
+      - "dramatic overhead lighting"
+      - "moody lamp lighting"
+      - "fluorescent office lighting"
+    atmosphere_options:
+      - "cozy and intimate"
+      - "tense and claustrophobic"
+      - "spacious and airy"
+      - "cluttered and lived-in"
+  
+  common_props:
+    living_room:
+      - couch
+      - coffee table
+      - television
+      - bookshelf
+      - lamp
+      - rug
+    office:
+      - desk
+      - computer
+      - chair
+      - filing cabinet
+      - printer
+      - phone
+    bedroom:
+      - bed
+      - nightstand
+      - dresser
+      - mirror
+      - lamp
+      - closet
+
+exterior:
+  environment:
+    lighting_options:
+      day:
+        - "bright natural sunlight"
+        - "soft overcast lighting"
+        - "harsh midday sun"
+        - "golden hour lighting"
+      night:
+        - "moonlight"
+        - "street lamp illumination"
+        - "neon signs"
+        - "car headlights"
+    weather_options:
+      - "clear sky"
+      - "partly cloudy"
+      - "overcast"
+      - "light rain"
+      - "heavy rain"
+      - "fog"
+      - "snow"
+  
+  common_props:
+    street:
+      - cars
+      - street signs
+      - traffic lights
+      - sidewalk
+      - buildings
+      - trees
+    park:
+      - benches
+      - trees
+      - grass
+      - paths
+      - playground
+      - fountain
+
+action:
+  shot_types:
+    - "wide shot"
+    - "medium shot"
+    - "close-up"
+    - "extreme close-up"
+    - "over-the-shoulder"
+    - "two-shot"
+    - "establishing shot"
+  
+  camera_angles:
+    - "eye level"
+    - "low angle"
+    - "high angle"
+    - "dutch angle"
+    - "bird's eye view"
+    - "worm's eye view"
+  
+  movement_types:
+    - "static"
+    - "pan"
+    - "tilt"
+    - "dolly"
+    - "tracking"
+    - "handheld"
+    - "crane"
+
+genre_styles:
+  neo_noir:
+    color_palette:
+      - "#0d0d0d"  # Deep black
+      - "#1a1a2e"  # Dark blue
+      - "#e94560"  # Neon red
+      - "#f5f5f5"  # Off white
+    mood: "dark and moody"
+    lighting: "high contrast with deep shadows"
+    atmosphere: "mysterious and tense"
+  
+  sci_fi:
+    color_palette:
+      - "#00d4ff"  # Cyan
+      - "#0a0e27"  # Deep space blue
+      - "#ff6b35"  # Orange accent
+      - "#c0c0c0"  # Silver
+    mood: "futuristic and sleek"
+    lighting: "cool blue tones with neon accents"
+    atmosphere: "technological and otherworldly"
+  
+  western:
+    color_palette:
+      - "#8b4513"  # Saddle brown
+      - "#daa520"  # Goldenrod
+      - "#cd853f"  # Peru
+      - "#f4a460"  # Sandy brown
+    mood: "rugged and dusty"
+    lighting: "harsh sunlight with long shadows"
+    atmosphere: "desolate and expansive"
+  
+  horror:
+    color_palette:
+      - "#1c0000"  # Dark red
+      - "#000000"  # Pure black
+      - "#4a4a4a"  # Dark gray
+      - "#8b0000"  # Blood red
+    mood: "terrifying and unsettling"
+    lighting: "minimal lighting with deep shadows"
+    atmosphere: "oppressive and threatening"
+  
+  romantic:
+    color_palette:
+      - "#ffb6c1"  # Light pink
+      - "#ffd700"  # Gold
+      - "#ffe4e1"  # Misty rose
+      - "#f0e68c"  # Khaki
+    mood: "warm and intimate"
+    lighting: "soft and flattering"
+    atmosphere: "dreamy and emotional"
