@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  ddna:
+    build: .
+    image: ddna:latest
+    container_name: ddna-app
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+      - ./models:/app/models
+      - ./config:/app/config
+    environment:
+      - DEVICE=cuda
+      - MODEL_PROVIDER=local
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: python -m ddna.cli generate /app/input/screenplays/sample_scene.fountain
+
+  api:
+    build: .
+    image: ddna:latest
+    container_name: ddna-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+      - ./models:/app/models
+    environment:
+      - DEVICE=cuda
+    command: uvicorn ddna.api:app --host 0.0.0.0 --port 8000
