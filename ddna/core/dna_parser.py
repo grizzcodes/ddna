@@ -5,7 +5,6 @@ from typing import Dict, List, Optional, Any
 from pathlib import Path
 import yaml
 from pydantic import BaseModel, Field
-import fountain
 
 
 class Character(BaseModel):
@@ -95,6 +94,47 @@ class SceneDNA(BaseModel):
         return ", ".join(prompt_parts)
 
 
+class SimpleFountainParser:
+    """Simple Fountain screenplay parser."""
+    
+    def parse(self, content: str) -> Dict:
+        """Parse Fountain format content."""
+        lines = content.split('\n')
+        elements = []
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+                
+            # Scene heading
+            if line.startswith(('INT.', 'EXT.', 'INT ', 'EXT ')):
+                elements.append({
+                    'type': 'scene_heading',
+                    'text': line
+                })
+            # Character (all caps)
+            elif line.isupper() and len(line) > 1 and not line.startswith('('):
+                elements.append({
+                    'type': 'character',
+                    'text': line
+                })
+            # Parenthetical
+            elif line.startswith('(') and line.endswith(')'):
+                elements.append({
+                    'type': 'parenthetical',
+                    'text': line
+                })
+            # Action
+            else:
+                elements.append({
+                    'type': 'action',
+                    'text': line
+                })
+        
+        return {'elements': elements}
+
+
 class DNAParser:
     """Parser for extracting DNA from screenplays."""
     
@@ -156,29 +196,24 @@ class DNAParser:
         """Load and parse screenplay file."""
         path = Path(screenplay_path)
         
+        with open(path, 'r') as f:
+            content = f.read()
+        
         if path.suffix == '.fountain':
-            with open(path, 'r') as f:
-                content = f.read()
-            return fountain.Fountain(content)
+            parser = SimpleFountainParser()
+            return parser.parse(content)
         else:
             # Simple text parsing fallback
-            with open(path, 'r') as f:
-                lines = f.readlines()
-            return {"lines": lines}
+            lines = content.split('\n')
+            return {"elements": [{"type": "action", "text": line} for line in lines]}
     
     def _extract_scene_heading(self, screenplay: Dict) -> str:
         """Extract scene heading from screenplay."""
-        if isinstance(screenplay, fountain.Fountain):
-            # Extract from Fountain format
-            for element in screenplay.elements:
-                if element.element_type == 'Scene Heading':
-                    return element.element_text
-        else:
-            # Simple extraction from text
-            for line in screenplay.get("lines", []):
-                if line.strip().startswith(('INT.', 'EXT.', 'INT ', 'EXT ')):
-                    return line.strip()
+        for element in screenplay.get('elements', []):
+            if element.get('type') == 'scene_heading':
+                return element.get('text', '')
         
+        # Default if no scene heading found
         return "INT. LOCATION - DAY"
     
     def _parse_environment(self, scene_heading: str) -> Environment:
@@ -236,17 +271,16 @@ class DNAParser:
         """Extract characters from screenplay."""
         characters = []
         
-        if isinstance(screenplay, fountain.Fountain):
-            for element in screenplay.elements:
-                if element.element_type == 'Character':
-                    char_name = element.element_text.strip()
-                    # Remove any parentheticals
-                    char_name = re.sub(r'\([^)]+\)', '', char_name).strip()
-                    
-                    characters.append(Character(
-                        id=char_name.upper().replace(' ', '_'),
-                        name=char_name,
-                    ))
+        for element in screenplay.get('elements', []):
+            if element.get('type') == 'character':
+                char_name = element.get('text', '').strip()
+                # Remove any parentheticals
+                char_name = re.sub(r'\([^)]+\)', '', char_name).strip()
+                
+                characters.append(Character(
+                    id=char_name.upper().replace(' ', '_'),
+                    name=char_name,
+                ))
         
         return characters
     
@@ -254,17 +288,11 @@ class DNAParser:
         """Extract action lines from screenplay."""
         action_lines = []
         
-        if isinstance(screenplay, fountain.Fountain):
-            for element in screenplay.elements:
-                if element.element_type == 'Action':
-                    action_lines.append(element.element_text.strip())
-        else:
-            # Simple extraction from text
-            for line in screenplay.get("lines", []):
-                line = line.strip()
-                if line and not line.startswith(('INT.', 'EXT.', '(', '[')):
-                    if not line.isupper():  # Not a character name
-                        action_lines.append(line)
+        for element in screenplay.get('elements', []):
+            if element.get('type') == 'action':
+                text = element.get('text', '').strip()
+                if text:
+                    action_lines.append(text)
         
         return action_lines
     
