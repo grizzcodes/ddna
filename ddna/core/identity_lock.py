@@ -88,17 +88,17 @@ class IdentityLock:
     
     def _extract_dominant_colors(self, image: Image.Image, n_colors: int = 5) -> List[str]:
         """Extract dominant colors from image region."""
-        # Simplified color extraction
-        img_array = np.array(image.resize((100, 100)))
+        # Simple color extraction without sklearn
+        img_array = np.array(image.resize((50, 50)))
+        
+        # Get unique colors (simplified)
         pixels = img_array.reshape(-1, 3)
+        unique_colors = np.unique(pixels, axis=0)
         
-        # K-means clustering for dominant colors
-        from sklearn.cluster import KMeans
-        kmeans = KMeans(n_clusters=n_colors, random_state=42, n_init=10)
-        kmeans.fit(pixels)
+        # Take first n colors as dominant (simplified)
+        dominant = unique_colors[:min(n_colors, len(unique_colors))]
         
-        colors = kmeans.cluster_centers_.astype(int)
-        hex_colors = ['#%02x%02x%02x' % tuple(c) for c in colors]
+        hex_colors = ['#%02x%02x%02x' % tuple(c) for c in dominant]
         return hex_colors
     
     def _compute_similarity(self, frame: Image.Image, identity: IdentityVector) -> float:
